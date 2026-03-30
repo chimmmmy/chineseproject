@@ -1,1 +1,133 @@
-<h1>test</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>matthew's chinese flashcard shop!</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: white;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #1e293b;
+      padding: 15px;
+      font-size: 24px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .container {
+      display: flex;
+      gap: 20px;
+      padding: 20px;
+    }
+    .cards, .cart {
+      flex: 1;
+      background: #1e293b;
+      padding: 15px;
+      border-radius: 10px;
+    }
+    .card {
+      background: #334155;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+    }
+    button {
+      background: #38bdf8;
+      border: none;
+      padding: 6px 10px;
+      margin-top: 5px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    button:hover {
+      background: #0ea5e9;
+    }
+    a {
+      color: #38bdf8;
+      display: block;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  matthew's chinese flashcard shop!
+  <span id="cart-count">Cart: 0</span>
+</header>
+
+<div class="container">
+  <div class="cards" id="cards"></div>
+  <div class="cart">
+    <h2>Your Cart</h2>
+    <div id="cart-items"></div>
+    <button onclick="checkout()">Checkout</button>
+    <div id="results"></div>
+  </div>
+</div>
+
+<script>
+const flashcards = [
+  {
+    name: test1 ,
+    description: "test",
+    link: "google.com"
+  },
+  {
+    name: "test2",
+    description: "test",
+    link: "apple.com"
+  },
+  {
+    name: "test3",
+    description: "test",
+    link: "samsung.com"
+  }
+];
+
+let cart = [];
+
+function renderCards() {
+  const container = document.getElementById("cards");
+  container.innerHTML = "<h2>Flashcards</h2>";
+  flashcards.forEach((card, index) => {
+    container.innerHTML += `
+      <div class="card">
+        <h3>${card.name}</h3>
+        <p>${card.description}</p>
+        <button onclick="addToCart(${index})">Add to Cart</button>
+      </div>
+    `;
+  });
+}
+
+function addToCart(index) {
+  cart.push(flashcards[index]);
+  updateCart();
+}
+
+function updateCart() {
+  document.getElementById("cart-count").innerText = "Cart: " + cart.length;
+  const cartDiv = document.getElementById("cart-items");
+  cartDiv.innerHTML = "";
+  cart.forEach((item, i) => {
+    cartDiv.innerHTML += `<p>${item.name}</p>`;
+  });
+}
+
+function checkout() {
+  const results = document.getElementById("results");
+  results.innerHTML = "<h3>info links:</h3>";
+  cart.forEach(item => {
+    results.innerHTML += `<a href="${item.link}" target="_blank">${item.name} Slides</a>`;
+  });
+}
+renderCards();
+</script>
+
+</body>
+</html>
